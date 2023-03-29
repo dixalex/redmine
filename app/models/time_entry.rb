@@ -160,7 +160,7 @@ class TimeEntry < ActiveRecord::Base
 
   def validate_time_entry
     if hours
-      errors.add :hours, :invalid if hours < 0
+      errors.add :hours, :invalid if hours && (hours <= -1000 || hours >= 1000)
       errors.add :hours, :invalid if hours == 0.0 && hours_changed? && !Setting.timelog_accept_0_hours?
 
       max_hours = Setting.timelog_max_hours_per_day.to_f
